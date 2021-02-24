@@ -11,10 +11,11 @@ public class Student {
     public Student() {}
 
 
-    public Student(String nome, String cognome, int eta) {
+    public Student(String nome, String cognome, int eta, int id) {
         setNome(nome);
         setCognome(cognome);
         setEta(eta);
+        setId(id);
     }
 
     public Student setNome(String n) {
@@ -54,5 +55,9 @@ public class Student {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

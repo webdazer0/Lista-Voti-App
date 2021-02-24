@@ -12,13 +12,13 @@ import com.miguel.app.lessontre.model.Student;
 
 import java.util.List;
 
-public class CustomAdapter extends BaseAdapter {
+public class StudentAdapter extends BaseAdapter {
 
     Context ctx;
     List<Student> studenti;
     LayoutInflater inflater;
 
-    public CustomAdapter(Context context, List<Student> studenti) {
+    public StudentAdapter(Context context, List<Student> studenti) {
         this.ctx = context;
         this.studenti = studenti;
         this.inflater = LayoutInflater.from(ctx);

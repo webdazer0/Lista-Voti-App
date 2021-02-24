@@ -3,11 +3,9 @@ package com.miguel.app.lessontre;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +19,7 @@ import android.widget.Toast;
 import com.miguel.app.lessontre.model.DBHelper;
 import com.miguel.app.lessontre.model.Student;
 import com.miguel.app.lessontre.model.StudentDB;
-import com.miguel.app.lessontre.view.adapter.CustomAdapter;
+import com.miguel.app.lessontre.view.adapter.StudentAdapter;
 import com.miguel.app.lessontre.view.DetailsActivity;
 
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Button addBtn;
     ListView myList;
     List<Student> students;
-    CustomAdapter adapter;
+    StudentAdapter adapter;
     Activity activity;
 
     List<Double> votes = new ArrayList<>();
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DBHelper(ctx);
 //        addSample();
         getStudents();
-        adapter = new CustomAdapter(ctx, students);
+        adapter = new StudentAdapter(ctx, students);
         myList.setAdapter(adapter);
 
         addBtn.setOnClickListener(addBtnEvent); // Aggiungi studenti
@@ -74,11 +72,12 @@ public class MainActivity extends AppCompatActivity {
     private final AdapterView.OnItemClickListener myListItemEvent = (parent, view, position, id) -> {
         Log.i("MITO DEBUG", "elemento: " + String.valueOf(position) + ", " + String.valueOf(id));
 
-        Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-        intent.putExtra("name", students.get(position).getNome());
-        intent.putExtra("lastname", students.get(position).getCognome());
+        Intent intent = new Intent(ctx, DetailsActivity.class);
+//        intent.putExtra("name", students.get(position).getNome());
+//        intent.putExtra("lastname", students.get(position).getCognome());
+        intent.putExtra("DB_Id", id + "");
 
-        view.getContext().startActivity(intent);
+        startActivity(intent);
     };
 
     private final View.OnClickListener addBtnEvent = vista -> {
@@ -136,8 +135,9 @@ public class MainActivity extends AppCompatActivity {
             String tmpName = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_NAME));
             String tmpLastname = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_LASTNAME));
             String tmpBirthdate = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_BIRTHDATE));
+            String tmpID = cursor.getString(cursor.getColumnIndex(StudentDB.Data._ID));
 
-            students.add(new Student(tmpName, tmpLastname, Integer.parseInt(tmpBirthdate)));
+            students.add(new Student(tmpName, tmpLastname, Integer.parseInt(tmpBirthdate), Integer.parseInt(tmpID) ));
         }
     }
 
@@ -165,9 +165,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addSample() {
-        students.add(new Student("Mario", "Rossi", 25));
-        students.add(new Student("Marta", "Cessi", 35));
-        students.add(new Student("Harry", "Ronaldo", 35));
+        students.add(new Student("Mario", "Rossi", 25, 11));
+        students.add(new Student("Marta", "Cessi", 35, 12));
+        students.add(new Student("Harry", "Ronaldo", 35, 13));
     }
 
 }

@@ -3,4 +3,7 @@
     <string name="nome">Nome</string>
     <string name="cognome">Cognome</string>
     <string name="eta">Età</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Books</string>
 </resources>
