@@ -54,8 +54,18 @@ public class StudentAdapter extends BaseAdapter {
         TextView fullname = (TextView)convertView.findViewById(R.id.lviNominativo);
         TextView age = (TextView)convertView.findViewById(R.id.lviEta);
 
-        fullname.setText(studenti.get(position).getNominativo());
-        age.setText(studenti.get(position).getMediaString());
+        String tmpFullname = studenti.get(position).getNominativo();
+        String media = studenti.get(position).getMediaString();
+
+        fullname.setText(tmpFullname);
+
+        if(studenti.get(position).getMedia() >= 0) {
+            age.setText("media: "+media);
+        } else {
+            age.setText("n.d."); // no data
+        }
+
+
 
         return convertView;
     }

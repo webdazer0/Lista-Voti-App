@@ -10,14 +10,15 @@
         android:id="@+id/lviNominativo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="xxxxxxxxxxxx"
-        android:layout_marginEnd="10dp"
+        android:text="nominativo"
+        android:layout_marginBottom="4dp"
         />
     <TextView
         android:id="@+id/lviEta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="media studente"
+        android:layout_marginBottom="8dp"
         />
 
 

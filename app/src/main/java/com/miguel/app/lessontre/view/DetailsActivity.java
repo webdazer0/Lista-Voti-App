@@ -118,11 +118,28 @@ public class DetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // AGGIORNARE DATI STUDENTE (NOME, COGNOME)
+
+        btnUpdate.setOnClickListener(v -> {
+            String tmpName = name.getText().toString();
+            String tmpLastname = lastname.getText().toString();
+
+            if (!tmpName.equals("") && !tmpLastname.equals("")) {
+                try {
+                    dbHelper.updateStudent(DB_Id, tmpName, tmpLastname);
+
+                    myToast("Dati aggiornati correttamente ✅");
+                } catch (Exception error) {
+                    Log.e("MITO_DEBUG", "Errore " + error.getMessage());
+                }
+            }
+        });
+
+        // Pulsante FloatActionButton per tornare alla HOME
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
         });
-
 
     }
 

@@ -147,13 +147,13 @@ public class MainActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             String tmpName = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_NAME));
             String tmpLastname = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_LASTNAME));
-            String tmpBirthdate = cursor.getString(cursor.getColumnIndex(VoteDB.Data.COL_VOTE));
+            String tmpVote = cursor.getString(cursor.getColumnIndex(VoteDB.Data.COL_VOTE));
             String tmpID = cursor.getString(cursor.getColumnIndex(StudentDB.Data._ID));
 
-            if (tmpBirthdate == null)
-                tmpBirthdate = "0"; // per gli studenti che non hanno ancora nessun voto
+            if (tmpVote == null)
+                tmpVote = "-1"; // per gli studenti che non hanno ancora nessun voto
 
-            students.add(new Student(tmpName, tmpLastname, Double.parseDouble(tmpBirthdate), Integer.parseInt(tmpID)));
+            students.add(new Student(tmpName, tmpLastname, Double.parseDouble(tmpVote), Integer.parseInt(tmpID)));
         }
     }
 
