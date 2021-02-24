@@ -4,17 +4,17 @@ public class Student {
 
     private String nome;
     private String cognome;
-    private int eta;
+    private double media;
 
     private int id = 77;
 
     public Student() {}
 
 
-    public Student(String nome, String cognome, int eta, int id) {
+    public Student(String nome, String cognome, double media, int id) {
         setNome(nome);
         setCognome(cognome);
-        setEta(eta);
+        setMedia(media);
         setId(id);
     }
 
@@ -28,8 +28,8 @@ public class Student {
         return this;
     }
 
-    public Student setEta(int eta) {
-        this.eta = eta;
+    public Student setMedia(double media) {
+        this.media = media;
         return this;
     }
 
@@ -41,16 +41,16 @@ public class Student {
         return cognome;
     }
 
-    public int getEta() {
-        return eta;
+    public double getMedia() {
+        return media;
     }
 
     public String getNominativo() {
         return getNome() + " " + getCognome();
     }
 
-    public String getEtaString() {
-        return String.valueOf(getEta());
+    public String getMediaString() {
+        return String.valueOf(getMedia());
     }
 
     public int getId() {

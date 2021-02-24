@@ -42,13 +42,28 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+//    SELECT  name, lastname, score, student._id  FROM student LEFT JOIN vote ON vote.student_id=student._id;
+//    SELECT  name, lastname, score, student._id  FROM student LEFT JOIN (SELECT AVG(score) as score, student_id FROM vote  GROUP BY student_id) AS vote ON vote.student_id=student._id;
+
+    public Cursor selectAll(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryString = "SELECT  name, lastname, score, student._id  FROM student LEFT JOIN (SELECT AVG(score) as score, student_id FROM vote  GROUP BY student_id) AS vote ON vote.student_id=student._id";
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        return cursor;
+    }
+
+
+
+
     public long delete(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase(); // WRITE
         String customQuery = "DELETE FROM " + StudentDB.Data.TABLE_NAME + " WHERE " + StudentDB.Data._ID + "=?";
 
         long result = db.delete(StudentDB.Data.TABLE_NAME, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
         Log.i("MITO_TAG", "SQL DELETE | result: " + result);
-
         return result;
     }
 
@@ -63,12 +78,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(StudentDB.Data.TABLE_NAME, null, values);
     }
 
+
+
+
+    public Cursor selectVotes(int id) {
+        SQLiteDatabase db = this.getReadableDatabase(); // READ
+//        SELECT AVG(score) as score, student_id FROM vote  WHERE (student_id=4)  GROUP BY student_id;
+        String queryString = "SELECT score, _id FROM vote  WHERE student_id=" + id;
+        return db.rawQuery(queryString, null);
+    }
+
     public long insertVote(int id, String vote) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("score", vote);
         values.put("student_id", String.valueOf(id));
         return db.insert(VoteDB.Data.TABLE_NAME, null, values);
+    }
+
+    public long deleteVote(int id) {
+        SQLiteDatabase db = this.getWritableDatabase(); // WRITE
+
+        long result = db.delete(VoteDB.Data.TABLE_NAME, "" + VoteDB.Data._ID + "=?", new String[]{String.valueOf(id)});
+        Log.i("MITO_TAG", "SQL DELETE | vote result: " + result);
+        return result;
     }
 
     public void clearDB() {

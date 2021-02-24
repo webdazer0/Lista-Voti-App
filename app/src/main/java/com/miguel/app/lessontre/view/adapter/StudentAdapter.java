@@ -26,7 +26,7 @@ public class StudentAdapter extends BaseAdapter {
 
     public void loadData(List<Student> studenti) {
        this.studenti = studenti;
-       this.notifyDataSetChanged();
+       notifyDataSetChanged();
     }
 
 
@@ -55,7 +55,7 @@ public class StudentAdapter extends BaseAdapter {
         TextView age = (TextView)convertView.findViewById(R.id.lviEta);
 
         fullname.setText(studenti.get(position).getNominativo());
-        age.setText(studenti.get(position).getEtaString());
+        age.setText(studenti.get(position).getMediaString());
 
         return convertView;
     }

@@ -5,14 +5,18 @@ public class Vote {
     private int pk;
     private int fk;
 
-    public Vote(int score, int pk, int fk) {
+    public Vote(int score, int pk) {
         this.score = score;
         this.pk = pk;
-        this.fk = fk;
+        this.fk = 0;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public String getScoreString() {
+        return String.valueOf(score);
     }
 
     public void setScore(int score) {

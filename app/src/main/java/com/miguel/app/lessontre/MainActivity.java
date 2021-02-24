@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.miguel.app.lessontre.model.DBHelper;
 import com.miguel.app.lessontre.model.Student;
 import com.miguel.app.lessontre.model.StudentDB;
+import com.miguel.app.lessontre.model.VoteDB;
 import com.miguel.app.lessontre.view.adapter.StudentAdapter;
 import com.miguel.app.lessontre.view.DetailsActivity;
 
@@ -58,23 +59,28 @@ public class MainActivity extends AppCompatActivity {
         myList = (ListView) findViewById(R.id.lvElenco);
 
         students = new ArrayList<>();
-
         dbHelper = new DBHelper(ctx);
-//        addSample();
-        getStudents();
-        adapter = new StudentAdapter(ctx, students);
-        myList.setAdapter(adapter);
 
-        addBtn.setOnClickListener(addBtnEvent); // Aggiungi studenti
-        myList.setOnItemClickListener(myListItemEvent); // Modifica studente in un'altra Activity
+        try {
+//            addSample();
+//            getStudents();
+            getStudentsAndVotes(); // Chiamata sql
+
+            adapter = new StudentAdapter(ctx, students);
+            myList.setAdapter(adapter);
+
+            addBtn.setOnClickListener(addBtnEvent); // Aggiungi studenti
+            myList.setOnItemClickListener(myListItemEvent); // Modifica studente in un'altra Activity
+        } catch (Exception error) {
+            Log.e("MITO DEBUG", "Errore: " + error.getMessage());
+        }
+
     }
 
     private final AdapterView.OnItemClickListener myListItemEvent = (parent, view, position, id) -> {
-        Log.i("MITO DEBUG", "elemento: " + String.valueOf(position) + ", " + String.valueOf(id));
+        Log.i("MITO DEBUG", "elemento: " + position + ", " + id);
 
         Intent intent = new Intent(ctx, DetailsActivity.class);
-//        intent.putExtra("name", students.get(position).getNome());
-//        intent.putExtra("lastname", students.get(position).getCognome());
         intent.putExtra("DB_Id", id + "");
 
         startActivity(intent);
@@ -91,20 +97,15 @@ public class MainActivity extends AppCompatActivity {
 
                 long new_Id = addStudent();
                 Log.i("MITO DEBUG", "ultimo ID: " + new_Id);
-                getStudents();
+
+                getStudentsAndVotes();
+
+//                getStudents();
                 reloadmyList(); // Ricarica la lista di studenti (nella Listview)
 
                 clearInputs(name, lastname, birthdate);
                 birthdate.clearFocus();
 
-            } catch (Exception error) {
-                Log.e("MITO_DEBUG: ", "errore: " + error.getMessage());
-            }
-
-//            students.add(new Student(name.getText().toString(), lastname.getText().toString(), Integer.parseInt(birthdate.getText().toString())));
-
-
-            try {
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
             } catch (Exception error) {
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             myToast("Devi compilare tutti i campi ❌");
         }
-
     };
 
     private long addStudent() {
@@ -137,7 +137,23 @@ public class MainActivity extends AppCompatActivity {
             String tmpBirthdate = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_BIRTHDATE));
             String tmpID = cursor.getString(cursor.getColumnIndex(StudentDB.Data._ID));
 
-            students.add(new Student(tmpName, tmpLastname, Integer.parseInt(tmpBirthdate), Integer.parseInt(tmpID) ));
+            students.add(new Student(tmpName, tmpLastname, Integer.parseInt(tmpBirthdate), Integer.parseInt(tmpID)));
+        }
+    }
+
+    private void getStudentsAndVotes() {
+        cleanMyList();
+        Cursor cursor = dbHelper.selectAll();
+        while (cursor.moveToNext()) {
+            String tmpName = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_NAME));
+            String tmpLastname = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_LASTNAME));
+            String tmpBirthdate = cursor.getString(cursor.getColumnIndex(VoteDB.Data.COL_VOTE));
+            String tmpID = cursor.getString(cursor.getColumnIndex(StudentDB.Data._ID));
+
+            if (tmpBirthdate == null)
+                tmpBirthdate = "0"; // per gli studenti che non hanno ancora nessun voto
+
+            students.add(new Student(tmpName, tmpLastname, Double.parseDouble(tmpBirthdate), Integer.parseInt(tmpID)));
         }
     }
 
@@ -147,6 +163,14 @@ public class MainActivity extends AppCompatActivity {
         myList.refreshDrawableState();
     }
 
+    private void clearInputs(TextView... myListDati) {
+        for (TextView dato : myListDati) dato.setText("");
+    }
+
+    private void myToast(CharSequence messaggio) {
+        Toast.makeText(ctx, messaggio, Toast.LENGTH_SHORT).show();
+    }
+
     private Double getMedia(TextView age) {
         double result;
         Double total = 0.0;
@@ -154,14 +178,6 @@ public class MainActivity extends AppCompatActivity {
         for (Double vote : votes) total += vote;
         result = total / (votes.size());
         return result;
-    }
-
-    private void clearInputs(TextView... myListDati) {
-        for (TextView dato : myListDati) dato.setText("");
-    }
-
-    private void myToast(CharSequence messaggio) {
-        Toast.makeText(ctx, messaggio, Toast.LENGTH_SHORT).show();
     }
 
     private void addSample() {
