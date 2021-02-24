@@ -31,13 +31,17 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+////////////////////////////////////////////////////////
+//////////////  IN MAINACTIVITY ////////////////////////
+////////////////////////////////////////////////////////
+
     public Cursor select() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase(); // READ
         return db.query(StudentDB.Data.TABLE_NAME, null, null, null, null, null, null);
     }
 
     public Cursor selectById(int selectId) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase(); // READ
         Cursor cursor = db.query(StudentDB.Data.TABLE_NAME, null, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(selectId)}, null, null, null);
         return cursor;
     }
@@ -46,7 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //    SELECT  name, lastname, score, student._id  FROM student LEFT JOIN (SELECT AVG(score) as score, student_id FROM vote  GROUP BY student_id) AS vote ON vote.student_id=student._id;
 
     public Cursor selectAll() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase(); // READ
 
         String queryString = "SELECT  name, lastname, score, student._id  FROM student LEFT JOIN (SELECT AVG(score) as score, student_id FROM vote  GROUP BY student_id) AS vote ON vote.student_id=student._id";
 
@@ -55,18 +59,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-
-    public int delete(int id) {
-        SQLiteDatabase db = this.getWritableDatabase(); // WRITE
-        String customQuery = "DELETE FROM " + StudentDB.Data.TABLE_NAME + " WHERE " + StudentDB.Data._ID + "=?";
-        int result = db.delete(StudentDB.Data.TABLE_NAME, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
-        int result2 = db.delete(VoteDB.Data.TABLE_NAME, "" + VoteDB.Data.COL_FK_ID + "=?", new String[]{String.valueOf(id)});
-        Log.i("MITO_TAG", "SQL DELETE | result: " + result + " | " + result2);
-        return result;
-    }
-
     public long insert(String name, String lastname, String birthdate) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase(); // WRITE
 
         ContentValues values = new ContentValues();
         values.put("name", name);
@@ -76,7 +70,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(StudentDB.Data.TABLE_NAME, null, values);
     }
 
-    public long updateStudent(int id, String name, String lastname) {
+////////////////////////////////////////////////////////
+//////////////  IN DETAILSACTIVITY /////////////////////
+////////////////////////////////////////////////////////
+
+    public void updateStudent(int id, String name, String lastname) {
         SQLiteDatabase db = this.getWritableDatabase(); // WRITE
 
         ContentValues values = new ContentValues();
@@ -86,6 +84,14 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = db.update(StudentDB.Data.TABLE_NAME, values, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
         Log.i("MITO_TAG", "SQL UPDATE | id: " + result);
 
+    }
+
+    public int delete(int id) {
+        SQLiteDatabase db = this.getWritableDatabase(); // WRITE
+        String customQuery = "DELETE FROM " + StudentDB.Data.TABLE_NAME + " WHERE " + StudentDB.Data._ID + "=?";
+        int result = db.delete(StudentDB.Data.TABLE_NAME, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
+        int result2 = db.delete(VoteDB.Data.TABLE_NAME, "" + VoteDB.Data.COL_FK_ID + "=?", new String[]{String.valueOf(id)});
+        Log.i("MITO_TAG", "SQL DELETE | result: " + result + " | " + result2);
         return result;
     }
 
@@ -111,8 +117,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+////////////////////////////////////////////////////////
+//////////////  JUST IN CASE ... ///////////////////////
+////////////////////////////////////////////////////////
+
     public void clearDB() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();  // WRITE
         db.execSQL(StudentDB.SQL_DROP_TABLE);
         db.execSQL(VoteDB.SQL_DROP_TABLE);
         onCreate(db);
