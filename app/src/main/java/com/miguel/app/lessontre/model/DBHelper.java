@@ -56,12 +56,12 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public long delete(int id) {
+    public int delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase(); // WRITE
         String customQuery = "DELETE FROM " + StudentDB.Data.TABLE_NAME + " WHERE " + StudentDB.Data._ID + "=?";
-
-        long result = db.delete(StudentDB.Data.TABLE_NAME, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
-        Log.i("MITO_TAG", "SQL DELETE | result: " + result);
+        int result = db.delete(StudentDB.Data.TABLE_NAME, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
+        int result2 = db.delete(VoteDB.Data.TABLE_NAME, "" + VoteDB.Data.COL_FK_ID + "=?", new String[]{String.valueOf(id)});
+        Log.i("MITO_TAG", "SQL DELETE | result: " + result + " | " + result2);
         return result;
     }
 
@@ -75,7 +75,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return db.insert(StudentDB.Data.TABLE_NAME, null, values);
     }
-
 
     public long updateStudent(int id, String name, String lastname) {
         SQLiteDatabase db = this.getWritableDatabase(); // WRITE
