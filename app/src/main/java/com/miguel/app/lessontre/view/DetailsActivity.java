@@ -83,6 +83,8 @@ public class DetailsActivity extends AppCompatActivity {
             Log.e("MITO_DEBUG", "errror: " + error.getMessage());
         }
 
+//      AGGIUNGERE  VOTO
+
         btnAddVote.setOnClickListener(v -> {
             if (!vote.getText().toString().equals("")) {  // controllo che l'input vote, non sia vuoto
                 if (Integer.parseInt(vote.getText().toString()) >= 0 && Integer.parseInt(vote.getText().toString()) <= 30) { // Controllo che l'input sia un voto valido compreso fra 0-30

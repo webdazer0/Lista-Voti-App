@@ -52,8 +52,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor selectAll() {
         SQLiteDatabase db = this.getReadableDatabase(); // READ
 
-        String queryString = "SELECT  name, lastname, score, student._id  FROM student LEFT JOIN (SELECT AVG(score) as score, student_id FROM vote  GROUP BY student_id) AS vote ON vote.student_id=student._id";
-
+//        String queryString = "SELECT  name, lastname, score, student._id  FROM student LEFT JOIN (SELECT AVG(score) as score, student_id FROM vote  GROUP BY student_id) AS vote ON vote.student_id=student._id";
+        String queryString = "SELECT  " + StudentDB.Data.COL_NAME + ", " + StudentDB.Data.COL_LASTNAME + ", " + VoteDB.Data.COL_VOTE + ", " + StudentDB.Data._ID + "  FROM " + StudentDB.Data.TABLE_NAME + " LEFT JOIN (SELECT AVG(" + VoteDB.Data.COL_VOTE + ") AS " + VoteDB.Data.COL_VOTE + ", " + VoteDB.Data.COL_FK_ID + " FROM " + VoteDB.Data.TABLE_NAME + "  GROUP BY " + VoteDB.Data.COL_FK_ID + ") AS " + VoteDB.Data.TABLE_NAME + " ON " + VoteDB.Data.COL_FK_ID + "=" + StudentDB.Data._ID + "";
         Cursor cursor = db.rawQuery(queryString, null);
 
         return cursor;
@@ -83,7 +83,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         long result = db.update(StudentDB.Data.TABLE_NAME, values, "" + StudentDB.Data._ID + "=?", new String[]{String.valueOf(id)});
         Log.i("MITO_TAG", "SQL UPDATE | id: " + result);
-
     }
 
     public int delete(int id) {
@@ -97,9 +96,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor selectVotes(int id) {
         SQLiteDatabase db = this.getReadableDatabase(); // READ
-//        SELECT AVG(score) as score, student_id FROM vote  WHERE (student_id=4)  GROUP BY student_id;
-        String queryString = "SELECT score, _id FROM vote  WHERE student_id=" + id;
-        return db.rawQuery(queryString, null);
+//        SELECT score, student_id FROM vote  WHERE student_id=4  GROUP BY student_id;
+        String queryString = "SELECT " + VoteDB.Data.COL_VOTE +  ", " + VoteDB.Data._ID + " FROM " + VoteDB.Data.TABLE_NAME + " WHERE " + VoteDB.Data.COL_FK_ID + "=?";
+        return db.rawQuery(queryString, new String[]{String.valueOf(id)});
     }
 
     public long insertVote(int id, String vote) {
