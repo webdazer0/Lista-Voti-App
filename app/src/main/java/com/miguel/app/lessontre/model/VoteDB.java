@@ -11,7 +11,7 @@ public class VoteDB {
     }
 
     public static final String SQL_CREATE_TABLE =
-            "CREATE DATABASE IF NOT EXISTS " + VoteDB.Data.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + VoteDB.Data.TABLE_NAME + " (" +
                     VoteDB.Data._ID + " INTEGER PRIMARY KEY," +
                     VoteDB.Data.COL_VOTE + " TEXT, " +
                     VoteDB.Data.COL_FK_ID + " INTEGER," +

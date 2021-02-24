@@ -13,7 +13,7 @@ public class StudentDB {
     }
 
     public static final String SQL_CREATE_TABLE =
-            "CREATE DATABASE IF NOT EXISTS " + Data.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + Data.TABLE_NAME + " (" +
                     Data._ID + " INTEGER PRIMARY KEY," +
                     Data.COL_NAME + " TEXT, " +
                     Data.COL_LASTNAME + " TEXT," +

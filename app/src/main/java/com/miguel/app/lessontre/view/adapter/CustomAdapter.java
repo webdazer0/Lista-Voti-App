@@ -26,7 +26,7 @@ public class CustomAdapter extends BaseAdapter {
 
     public void loadData(List<Student> studenti) {
        this.studenti = studenti;
-        notifyDataSetChanged();
+       this.notifyDataSetChanged();
     }
 
 

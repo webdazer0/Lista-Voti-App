@@ -3,8 +3,11 @@ package com.miguel.app.lessontre;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.miguel.app.lessontre.model.DBHelper;
 import com.miguel.app.lessontre.model.Student;
+import com.miguel.app.lessontre.model.StudentDB;
 import com.miguel.app.lessontre.view.adapter.CustomAdapter;
 import com.miguel.app.lessontre.view.DetailsActivity;
 
@@ -37,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
     Context ctx;
 
+    DBHelper dbHelper;
+
+    TextView name;
+    TextView lastname;
+    TextView birthdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         myList = (ListView) findViewById(R.id.lvElenco);
 
         students = new ArrayList<>();
-        addSample();
+
+        dbHelper = new DBHelper(ctx);
+//        addSample();
+        getStudents();
         adapter = new CustomAdapter(ctx, students);
         myList.setAdapter(adapter);
 
@@ -57,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         myList.setOnItemClickListener(myListItemEvent); // Modifica studente in un'altra Activity
     }
 
-    private AdapterView.OnItemClickListener myListItemEvent = (parent, view, position, id) -> {
+    private final AdapterView.OnItemClickListener myListItemEvent = (parent, view, position, id) -> {
         Log.i("MITO DEBUG", "elemento: " + String.valueOf(position) + ", " + String.valueOf(id));
 
         Intent intent = new Intent(view.getContext(), DetailsActivity.class);
@@ -67,26 +81,35 @@ public class MainActivity extends AppCompatActivity {
         view.getContext().startActivity(intent);
     };
 
-    private View.OnClickListener addBtnEvent = vista -> {
-        TextView name = ((TextView) findViewById(R.id.txtNome));
-        TextView lastname = (TextView) findViewById(R.id.txtCognome);
-        TextView vote = (TextView) findViewById(R.id.txtEta);
+    private final View.OnClickListener addBtnEvent = vista -> {
+        name = ((TextView) findViewById(R.id.txtNome));
+        lastname = (TextView) findViewById(R.id.txtCognome);
+        birthdate = (TextView) findViewById(R.id.txtEta);
 
-        if (name.getText().length() != 0 & lastname.getText().length() != 0 & vote.getText().length() != 0) {
+        if (name.getText().length() != 0 & lastname.getText().length() != 0 & birthdate.getText().length() != 0) {
 
-            students.add(new Student(name.getText().toString(), lastname.getText().toString(), Integer.valueOf(vote.getText().toString())));
-            adapter.loadData(students);
-            myList.invalidateViews();
-            myList.refreshDrawableState();
+            try {
 
-            clearInputs(name, lastname, vote);
-            vote.clearFocus();
+                long new_Id = addStudent();
+                Log.i("MITO DEBUG", "ultimo ID: " + new_Id);
+                getStudents();
+                reloadmyList(); // Ricarica la lista di studenti (nella Listview)
+
+                clearInputs(name, lastname, birthdate);
+                birthdate.clearFocus();
+
+            } catch (Exception error) {
+                Log.e("MITO_DEBUG: ", "errore: " + error.getMessage());
+            }
+
+//            students.add(new Student(name.getText().toString(), lastname.getText().toString(), Integer.parseInt(birthdate.getText().toString())));
+
 
             try {
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
             } catch (Exception error) {
-                Log.i("MITO DEBUG", "Errore: " + error.getMessage());
+                Log.e("MITO DEBUG", "Errore: " + error.getMessage());
             }
             myToast("Dati inseriti correttamente ✅");
         } else {
@@ -95,12 +118,39 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+    private long addStudent() {
+        String tmpName = name.getText().toString();
+        String tmpLastname = lastname.getText().toString();
+        String tmpBirthdate = birthdate.getText().toString();
+        return dbHelper.insert(tmpName, tmpLastname, tmpBirthdate);
+    }
+
+    private void cleanMyList() {
+        students.clear();
+    }
+
+    private void getStudents() {
+        cleanMyList();
+        Cursor cursor = dbHelper.select();
+        while (cursor.moveToNext()) {
+            String tmpName = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_NAME));
+            String tmpLastname = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_LASTNAME));
+            String tmpBirthdate = cursor.getString(cursor.getColumnIndex(StudentDB.Data.COL_BIRTHDATE));
+
+            students.add(new Student(tmpName, tmpLastname, Integer.parseInt(tmpBirthdate)));
+        }
+    }
+
+    private void reloadmyList() {
+        adapter.loadData(students);
+        myList.invalidateViews();
+        myList.refreshDrawableState();
+    }
 
     private Double getMedia(TextView age) {
-        Double result;
+        double result;
         Double total = 0.0;
         votes.add(Double.parseDouble(age.getText().toString()));
-
         for (Double vote : votes) total += vote;
         result = total / (votes.size());
         return result;

@@ -10,10 +10,11 @@ public class Student {
 
     public Student() {}
 
-    public Student(String n, String c, int e) {
-        setNome(n);
-        setCognome(c);
-        setEta(e);
+
+    public Student(String nome, String cognome, int eta) {
+        setNome(nome);
+        setCognome(cognome);
+        setEta(eta);
     }
 
     public Student setNome(String n) {

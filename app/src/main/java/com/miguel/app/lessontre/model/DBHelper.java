@@ -1,6 +1,8 @@
 package com.miguel.app.lessontre.model;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -23,6 +25,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(StudentDB.SQL_DROP_TABLE);
+        db.execSQL(VoteDB.SQL_DROP_TABLE);
+        onCreate(db);
+    }
+
+    public Cursor select() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(StudentDB.Data.TABLE_NAME, null, null, null, null, null, null);
+    }
+
+    public long insert(String name, String lastname, String birthdate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("lastname", lastname);
+        values.put("birthdate", birthdate);
+
+        return db.insert(StudentDB.Data.TABLE_NAME, null, values);
+    }
+
+    public void clearDB() {
+        SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(StudentDB.SQL_DROP_TABLE);
         db.execSQL(VoteDB.SQL_DROP_TABLE);
         onCreate(db);
