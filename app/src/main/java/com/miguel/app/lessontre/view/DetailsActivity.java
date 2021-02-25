@@ -7,16 +7,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.miguel.app.lessontre.MainActivity;
 import com.miguel.app.lessontre.R;
 import com.miguel.app.lessontre.model.DBHelper;
 import com.miguel.app.lessontre.model.StudentDB;
@@ -116,7 +112,7 @@ public class DetailsActivity extends AppCompatActivity {
         // CANCELLARE STUDENTE
         btnDelete.setOnClickListener(v -> {
             long success = dbHelper.delete(DB_Id);
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, AppActivity.class);
             startActivity(intent);
         });
 
@@ -139,7 +135,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         // Pulsante FloatActionButton per tornare alla HOME
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, AppActivity.class);
             startActivity(intent);
         });
 

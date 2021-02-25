@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+
+    tools:context=".view.AppActivity">
 
     <TextView
         android:id="@+id/testo"
@@ -19,8 +20,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
         android:orientation="vertical"
+        android:layout_weight="6"
         android:paddingHorizontal="30dp">
 
         <EditText

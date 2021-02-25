@@ -1,4 +1,4 @@
-package com.miguel.app.lessontre;
+package com.miguel.app.lessontre.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,18 +16,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.miguel.app.lessontre.R;
 import com.miguel.app.lessontre.model.DBHelper;
 import com.miguel.app.lessontre.model.Student;
 import com.miguel.app.lessontre.model.StudentDB;
 import com.miguel.app.lessontre.model.VoteDB;
 import com.miguel.app.lessontre.view.adapter.StudentAdapter;
-import com.miguel.app.lessontre.view.DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class AppActivity extends AppCompatActivity {
 
     TextView testo;
     Button addBtn;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ctx = this;
-        activity = MainActivity.this;
+        activity = AppActivity.this;
 
         addBtn = (Button) findViewById(R.id.btnAggiungi);
         myList = (ListView) findViewById(R.id.lvElenco);
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception error) {
             Log.e("MITO DEBUG", "Errore: " + error.getMessage());
         }
-
     }
 
     private final AdapterView.OnItemClickListener myListItemEvent = (parent, view, position, id) -> {
@@ -169,6 +168,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void myToast(CharSequence messaggio) {
         Toast.makeText(ctx, messaggio, Toast.LENGTH_SHORT).show();
+
+//        Toast toast = new Toast(ctx);
+//
+//
+//        TextView tv = new TextView(ctx);
+//        tv.setBackgroundColor(Color.BLUE);
+//        tv.setTextColor(Color.RED);
+//
+//        toast.setText(messaggio);
+//        toast.setDuration(Toast.LENGTH_LONG);
+//
+//        toast.setView(tv);
+//        toast.show();
     }
 
     private Double getMedia(TextView age) {
