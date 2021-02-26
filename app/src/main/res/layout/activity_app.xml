@@ -17,11 +17,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:paddingHorizontal="50dp"
-            android:paddingTop="50dp"
+            android:layout_weight="0.175"
             android:background="@drawable/custom_background"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:paddingHorizontal="50dp">
 
             <ImageView
                 android:id="@+id/logo"
@@ -29,16 +28,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@drawable/book_lover" />
+
             <TextView
                 android:id="@+id/school"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/logo"
                 android:layout_marginTop="12dp"
-
                 android:gravity="center"
                 android:text="Sqlite School"
                 android:textColor="@color/colorPrimary"
-                android:layout_below="@+id/logo"
                 android:textSize="24sp"
                 android:textStyle="italic" />
 
@@ -46,30 +45,31 @@
                 android:id="@+id/btnSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/school"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_centerInParent="true"
-                android:layout_below="@+id/school"
                 android:text="Benvenuto" />
 
             <TextView
                 android:id="@+id/createHere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_below="@+id/btnSchool"
-                android:textStyle="italic"
-                android:paddingTop="15dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="15dp"
+                android:paddingVertical="5dp"
                 android:text="Cambia la tua vita. Entra in Sqlite School."
                 android:textColor="@color/colorPrimary"
-                />
+                android:textStyle="italic" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_weight=".8"
+            android:layout_weight=".825"
             android:fillViewport="true"
             android:orientation="vertical"
             android:padding="0dp">
@@ -83,20 +83,47 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                >
+                android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/dontHaveAccount"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/follow_us"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
                     android:text="Segui le ultime notizie sui nostri social."
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/follow_us"
                     android:gravity="center"
 
-                    android:textColor="@color/white"
-                    />
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:backgroundTintMode="@color/colorSecondary"
+                        android:src="@drawable/ic_linkedin" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="5dp"
+                        android:src="@drawable/ic_facebook" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:src="@drawable/ic_instagram" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
