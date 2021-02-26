@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LessonTre">
 
-        <activity android:name=".SchoolActivity">
+        <activity android:name=".AppActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".view.DetailsActivity" />
-        <activity android:name=".view.AppActivity">
+        <activity android:name=".view.SchoolActivity">
 
         </activity>
 

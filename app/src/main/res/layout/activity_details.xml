@@ -4,89 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".view.DetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingHorizontal="30dp">
-
-        <EditText
-            android:id="@+id/txtDettagliNominativo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="6dp"
-            android:drawableStart="@drawable/xperm_identity_24"
-            android:drawablePadding="5dp"
-            android:hint="@string/nome"
-            android:inputType="textCapWords" />
-
-        <EditText
-            android:id="@+id/txtDettagliEta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="6dp"
-            android:drawableStart="@drawable/xperm_identity_24"
-            android:drawablePadding="5dp"
-            android:hint="@string/cognome" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btnUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginVertical="12dp"
-                android:text="Aggiorna" />
-
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginVertical="12dp"
-                android:text="Cancella" />
-        </RelativeLayout>
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:background="@drawable/custom_background"
+            android:paddingBottom="8dp"
+            android:orientation="vertical">
 
             <EditText
-                android:id="@+id/txtVoto"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtDettagliNominativo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="6dp"
-                android:layout_weight="3"
-                android:drawableStart="@drawable/icon_age_24"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="6dp"
+                android:drawableStart="@drawable/xperm_identity_24"
                 android:drawablePadding="5dp"
-                android:hint="voto"
-                android:inputType="number" />
+                android:hint="@string/nome"
+                android:inputType="textCapWords" />
 
-            <Button
-                android:id="@+id/btnAddVoto"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/txtDettagliEta"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:text="Aggiungi voto" />
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="6dp"
+                android:drawableStart="@drawable/xperm_identity_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/cognome" />
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="30dp">
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginVertical="12dp"
+                    android:text="Aggiorna" />
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginVertical="12dp"
+                    android:text="Cancella" />
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/lvElencoVoti"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:fillViewport="true"
-            />
+            android:orientation="vertical"
+
+            android:paddingTop="30dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:paddingHorizontal="30dp"
+                android:paddingTop="5dp"
+                android:weightSum="4">
+
+                <EditText
+                    android:id="@+id/txtVoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="6dp"
+                    android:layout_weight="3"
+                    android:drawableStart="@drawable/ic_vote_24"
+                    android:drawablePadding="5dp"
+                    android:hint="voto"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/btnAddVoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:background="@drawable/shape_border1"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="AGGIUNGI VOTO"
+                    android:paddingVertical="12dp"
+                    />
+
+
+
+            </LinearLayout>
+
+            <ListView
+
+                android:id="@+id/lvElencoVoti"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/white"
+                android:dividerHeight="1dp"
+                android:fillViewport="true"
+                android:paddingHorizontal="30dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -95,15 +134,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:elevation="8dp"
         android:layout_margin="16dp"
+        android:background="@color/oranglish"
+        android:elevation="8dp"
         app:srcCompat="@drawable/ic_home_black_24dp" />
-
-
-
-
-
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

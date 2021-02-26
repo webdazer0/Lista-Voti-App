@@ -49,7 +49,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         Button btnUpdate = findViewById(R.id.btnUpdate);
         Button btnDelete = findViewById(R.id.btnDelete);
-        Button btnAddVote = findViewById(R.id.btnAddVoto);
+        TextView btnAddVote = findViewById(R.id.btnAddVoto);
         fab = findViewById(R.id.fab);
 
         try {
@@ -112,7 +112,7 @@ public class DetailsActivity extends AppCompatActivity {
         // CANCELLARE STUDENTE
         btnDelete.setOnClickListener(v -> {
             long success = dbHelper.delete(DB_Id);
-            Intent intent = new Intent(context, AppActivity.class);
+            Intent intent = new Intent(context, SchoolActivity.class);
             startActivity(intent);
         });
 
@@ -135,7 +135,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         // Pulsante FloatActionButton per tornare alla HOME
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(context, AppActivity.class);
+            Intent intent = new Intent(context, SchoolActivity.class);
             startActivity(intent);
         });
 

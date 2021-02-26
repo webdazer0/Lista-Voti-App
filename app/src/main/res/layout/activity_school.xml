@@ -1,105 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purplish"
-    tools:context=".SchoolActivity">
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    tools:context=".view.SchoolActivity">
+
+    <TextView
+        android:id="@+id/testo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:gravity="center"
+        android:text="Welcome Rookie 3.0"
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="1">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.125"
-            android:paddingHorizontal="50dp"
-            android:paddingTop="50dp"
-            android:background="@drawable/custom_background"
-            android:fillViewport="true">
-
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/book_lover" />
-            <TextView
-                android:id="@+id/school"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-
-                android:gravity="center"
-                android:text="Sqlite School"
-                android:textColor="@color/colorPrimary"
-                android:layout_below="@+id/logo"
-                android:textSize="24sp"
-                android:textStyle="italic" />
-
-            <Button
-                android:id="@+id/btnSchool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_centerInParent="true"
-                android:layout_below="@+id/school"
-                android:text="Benvenuto" />
-
-            <TextView
-                android:id="@+id/createHere"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_below="@+id/btnSchool"
-                android:paddingTop="15dp"
-                android:text="Lorem Ipsum la la la"
-                android:textColor="@color/colorPrimary"
-                />
-
-        </RelativeLayout>
+        android:layout_weight="6"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight=".875"
-            android:fillViewport="true"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="0dp">
-
-
-            <!--        android:fontFamily="@font/archristy"-->
-
-
-            <!--            android:theme="@style/RaisedButtonDark"-->
-
-            <RelativeLayout
+            android:background="@drawable/custom_background"
+            android:paddingHorizontal="30dp"
+            >
+            <EditText
+                android:id="@+id/txtNome"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="6dp"
+                android:drawableStart="@drawable/xperm_identity_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/nome"
+                android:inputType="textCapWords" />
 
-                <TextView
-                    android:id="@+id/dontHaveAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    android:text="Segui le ultime notizie sui nostri social."
-                    android:textColor="@color/white"
-                    />
+            <EditText
+                android:id="@+id/txtCognome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="6dp"
+                android:drawableStart="@drawable/xperm_identity_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/cognome"
+                android:inputType="textCapWords" />
 
+            <EditText
+                android:id="@+id/txtEta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="6dp"
+                android:drawableStart="@drawable/icon_age_24"
+                android:drawablePadding="5dp"
+                android:hint="@string/eta"
+                android:inputType="number" />
 
-            </RelativeLayout>
+            <Button
+                android:id="@+id/btnAggiungi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="12dp"
+                android:text="Aggiungi" />
 
         </LinearLayout>
 
 
+        <ListView
+            android:id="@+id/lvElenco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:divider="@color/white"
+            android:dividerHeight="1dp"
+            android:paddingHorizontal="30dp"
+            />
+
+
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_question" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

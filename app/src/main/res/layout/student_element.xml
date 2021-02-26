@@ -10,6 +10,7 @@
         android:id="@+id/lviNominativo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:text="nominativo"
         android:layout_marginBottom="4dp"
         />
@@ -17,6 +18,7 @@
         android:id="@+id/lviEta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:text="media studente"
         android:layout_marginBottom="8dp"
         />

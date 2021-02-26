@@ -10,6 +10,8 @@
     <color name="danger">#dc3545</color>
 <!--    <color name="colorPrimary">#FF3700B3</color>-->
     <color name="colorPrimary">#4E3D77</color>
+    <color name="colorSecondary">@color/oranglish</color>
+
     <color name="purplish">#4E3D77</color>
     <color name="oranglish">#FFAC00</color>
 </resources>

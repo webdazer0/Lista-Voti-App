@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.miguel.app.lessontre.R;
 import com.miguel.app.lessontre.model.DBHelper;
 import com.miguel.app.lessontre.model.Student;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AppActivity extends AppCompatActivity {
+public class SchoolActivity extends AppCompatActivity {
 
     TextView testo;
     Button addBtn;
@@ -45,18 +46,23 @@ public class AppActivity extends AppCompatActivity {
 
     TextView name;
     TextView lastname;
-    TextView birthdate;
+    TextView birthdate; // Qui dovrà apparire un Datepicker per scegliere la data di nascita
+
+    FloatingActionButton fab;
+    boolean isClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_school);
 
         ctx = this;
-        activity = AppActivity.this;
+        activity = SchoolActivity.this;
 
         addBtn = (Button) findViewById(R.id.btnAggiungi);
         myList = (ListView) findViewById(R.id.lvElenco);
+
+        fab = findViewById(R.id.fab);
 
         students = new ArrayList<>();
         dbHelper = new DBHelper(ctx);
@@ -74,6 +80,17 @@ public class AppActivity extends AppCompatActivity {
         } catch (Exception error) {
             Log.e("MITO DEBUG", "Errore: " + error.getMessage());
         }
+
+
+        fab.setOnClickListener(v -> {
+            if(!isClicked) {
+                myToast("Ciaooo, prova ad inserire uno studente 👀");
+                isClicked = !isClicked;
+            } else {
+                myToast("Se hai già inserito uno, clicacci sul suo nome e dali un voto 🙄");
+                isClicked = !isClicked;
+            }
+        });
     }
 
     private final AdapterView.OnItemClickListener myListItemEvent = (parent, view, position, id) -> {
